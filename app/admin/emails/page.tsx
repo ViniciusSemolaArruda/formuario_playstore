@@ -71,7 +71,6 @@ export default function EmailsAdminPage() {
       )
     } catch (err: unknown) {
       console.error("Erro aprovando lead:", err)
-      // você pode exibir um toast, etc
     }
   }
 
@@ -82,18 +81,20 @@ export default function EmailsAdminPage() {
   }, [])
 
   return (
-    <main className="min-h-screen bg-slate-100 px-4 py-8">
-      <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-lg p-6 space-y-4">
-        <h1 className="text-xl font-semibold text-slate-900">
+    <main className="min-h-screen bg-slate-100 px-3 py-6 md:px-4 md:py-8">
+      <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-lg p-4 md:p-6 space-y-4">
+        <h1 className="text-lg md:text-xl font-semibold text-slate-900">
           E-mails cadastrados (teste fechado)
         </h1>
 
-        <p className="text-sm text-slate-600">
+        <p className="text-xs md:text-sm text-slate-600">
           Esta página recarrega automaticamente a lista a cada{" "}
           <strong>5 segundos</strong>.
         </p>
 
-        {isLoading && <p className="text-sm text-slate-500">Carregando...</p>}
+        {isLoading && (
+          <p className="text-sm text-slate-500">Carregando...</p>
+        )}
 
         {error && (
           <p className="text-sm text-red-600 bg-red-50 border border-red-100 rounded-md px-3 py-2">
@@ -108,34 +109,22 @@ export default function EmailsAdminPage() {
         )}
 
         {leads.length > 0 && (
-          <div className="border border-slate-200 rounded-xl overflow-hidden">
-            <table className="w-full text-sm">
-              <thead className="bg-slate-50">
-                <tr>
-                  <th className="text-left px-3 py-2 border-b border-slate-200">
-                    E-mail
-                  </th>
-                  <th className="text-left px-3 py-2 border-b border-slate-200">
-                    Data/Hora
-                  </th>
-                  <th className="text-left px-3 py-2 border-b border-slate-200">
-                    Status
-                  </th>
-                  <th className="text-left px-3 py-2 border-b border-slate-200">
-                    Ação
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {leads.map((lead) => (
-                  <tr key={lead.id} className="odd:bg-white even:bg-slate-50">
-                    <td className="px-3 py-2 border-b border-slate-100">
-                      {lead.email}
-                    </td>
-                    <td className="px-3 py-2 border-b border-slate-100 text-xs text-slate-500">
-                      {new Date(lead.createdAt).toLocaleString("pt-BR")}
-                    </td>
-                    <td className="px-3 py-2 border-b border-slate-100 text-xs">
+          <>
+            {/* Mobile: cards empilhados */}
+            <div className="space-y-3 md:hidden">
+              {leads.map((lead) => (
+                <div
+                  key={lead.id}
+                  className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 flex flex-col gap-2"
+                >
+                  <div className="flex justify-between items-start gap-2">
+                    <div className="flex-1">
+                      <p className="text-xs text-slate-500">E-mail</p>
+                      <p className="text-sm font-medium text-slate-900 break-all">
+                        {lead.email}
+                      </p>
+                    </div>
+                    <div>
                       {lead.approved ? (
                         <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-1 text-[11px] font-medium text-emerald-700">
                           ✅ Aprovado
@@ -145,27 +134,96 @@ export default function EmailsAdminPage() {
                           ⏳ Pendente
                         </span>
                       )}
-                    </td>
-                    <td className="px-3 py-2 border-b border-slate-100 text-xs">
-                      {!lead.approved && (
+                    </div>
+                  </div>
+
+                  <div className="flex justify-between items-center gap-2">
+                    <p className="text-[11px] text-slate-500">
+                      {new Date(lead.createdAt).toLocaleString("pt-BR")}
+                    </p>
+
+                    <div>
+                      {!lead.approved ? (
                         <button
                           onClick={() => approveLead(lead.id)}
                           className="rounded-full bg-emerald-600 px-3 py-1 text-[11px] font-semibold text-white hover:bg-emerald-700"
                         >
                           Aprovar
                         </button>
-                      )}
-                      {lead.approved && (
+                      ) : (
                         <span className="text-slate-400 text-[11px]">
                           ✔ Já aprovado
                         </span>
                       )}
-                    </td>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Desktop/Tablet: tabela */}
+            <div className="hidden md:block border border-slate-200 rounded-xl overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead className="bg-slate-50">
+                  <tr>
+                    <th className="text-left px-3 py-2 border-b border-slate-200">
+                      E-mail
+                    </th>
+                    <th className="text-left px-3 py-2 border-b border-slate-200">
+                      Data/Hora
+                    </th>
+                    <th className="text-left px-3 py-2 border-b border-slate-200">
+                      Status
+                    </th>
+                    <th className="text-left px-3 py-2 border-b border-slate-200">
+                      Ação
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  {leads.map((lead) => (
+                    <tr
+                      key={lead.id}
+                      className="odd:bg-white even:bg-slate-50"
+                    >
+                      <td className="px-3 py-2 border-b border-slate-100">
+                        {lead.email}
+                      </td>
+                      <td className="px-3 py-2 border-b border-slate-100 text-xs text-slate-500">
+                        {new Date(lead.createdAt).toLocaleString("pt-BR")}
+                      </td>
+                      <td className="px-3 py-2 border-b border-slate-100 text-xs">
+                        {lead.approved ? (
+                          <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-1 text-[11px] font-medium text-emerald-700">
+                            ✅ Aprovado
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2 py-1 text-[11px] font-medium text-amber-700">
+                            ⏳ Pendente
+                          </span>
+                        )}
+                      </td>
+                      <td className="px-3 py-2 border-b border-slate-100 text-xs">
+                        {!lead.approved && (
+                          <button
+                            onClick={() => approveLead(lead.id)}
+                            className="rounded-full bg-emerald-600 px-3 py-1 text-[11px] font-semibold text-white hover:bg-emerald-700"
+                          >
+                            Aprovar
+                          </button>
+                        )}
+                        {lead.approved && (
+                          <span className="text-slate-400 text-[11px]">
+                            ✔ Já aprovado
+                          </span>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </>
         )}
       </div>
     </main>
