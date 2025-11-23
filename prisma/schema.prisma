@@ -11,4 +11,5 @@ model EmailLead {
   id        String   @id @default(cuid())
   email     String   @unique
   createdAt DateTime @default(now())
+  approved  Boolean  @default(false) // 👈 NOVO
 }

@@ -73,7 +73,8 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 export const EmailLeadScalarFieldEnum = {
   id: 'id',
   email: 'email',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  approved: 'approved'
 } as const
 
 export type EmailLeadScalarFieldEnum = (typeof EmailLeadScalarFieldEnum)[keyof typeof EmailLeadScalarFieldEnum]

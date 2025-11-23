@@ -28,18 +28,21 @@ export type EmailLeadMinAggregateOutputType = {
   id: string | null
   email: string | null
   createdAt: Date | null
+  approved: boolean | null
 }
 
 export type EmailLeadMaxAggregateOutputType = {
   id: string | null
   email: string | null
   createdAt: Date | null
+  approved: boolean | null
 }
 
 export type EmailLeadCountAggregateOutputType = {
   id: number
   email: number
   createdAt: number
+  approved: number
   _all: number
 }
 
@@ -48,18 +51,21 @@ export type EmailLeadMinAggregateInputType = {
   id?: true
   email?: true
   createdAt?: true
+  approved?: true
 }
 
 export type EmailLeadMaxAggregateInputType = {
   id?: true
   email?: true
   createdAt?: true
+  approved?: true
 }
 
 export type EmailLeadCountAggregateInputType = {
   id?: true
   email?: true
   createdAt?: true
+  approved?: true
   _all?: true
 }
 
@@ -139,6 +145,7 @@ export type EmailLeadGroupByOutputType = {
   id: string
   email: string
   createdAt: Date
+  approved: boolean
   _count: EmailLeadCountAggregateOutputType | null
   _min: EmailLeadMinAggregateOutputType | null
   _max: EmailLeadMaxAggregateOutputType | null
@@ -166,12 +173,14 @@ export type EmailLeadWhereInput = {
   id?: Prisma.StringFilter<"EmailLead"> | string
   email?: Prisma.StringFilter<"EmailLead"> | string
   createdAt?: Prisma.DateTimeFilter<"EmailLead"> | Date | string
+  approved?: Prisma.BoolFilter<"EmailLead"> | boolean
 }
 
 export type EmailLeadOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  approved?: Prisma.SortOrder
 }
 
 export type EmailLeadWhereUniqueInput = Prisma.AtLeast<{
@@ -181,12 +190,14 @@ export type EmailLeadWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.EmailLeadWhereInput[]
   NOT?: Prisma.EmailLeadWhereInput | Prisma.EmailLeadWhereInput[]
   createdAt?: Prisma.DateTimeFilter<"EmailLead"> | Date | string
+  approved?: Prisma.BoolFilter<"EmailLead"> | boolean
 }, "id" | "email">
 
 export type EmailLeadOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  approved?: Prisma.SortOrder
   _count?: Prisma.EmailLeadCountOrderByAggregateInput
   _max?: Prisma.EmailLeadMaxOrderByAggregateInput
   _min?: Prisma.EmailLeadMinOrderByAggregateInput
@@ -199,66 +210,77 @@ export type EmailLeadScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"EmailLead"> | string
   email?: Prisma.StringWithAggregatesFilter<"EmailLead"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"EmailLead"> | Date | string
+  approved?: Prisma.BoolWithAggregatesFilter<"EmailLead"> | boolean
 }
 
 export type EmailLeadCreateInput = {
   id?: string
   email: string
   createdAt?: Date | string
+  approved?: boolean
 }
 
 export type EmailLeadUncheckedCreateInput = {
   id?: string
   email: string
   createdAt?: Date | string
+  approved?: boolean
 }
 
 export type EmailLeadUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  approved?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type EmailLeadUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  approved?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type EmailLeadCreateManyInput = {
   id?: string
   email: string
   createdAt?: Date | string
+  approved?: boolean
 }
 
 export type EmailLeadUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  approved?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type EmailLeadUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  approved?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type EmailLeadCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  approved?: Prisma.SortOrder
 }
 
 export type EmailLeadMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  approved?: Prisma.SortOrder
 }
 
 export type EmailLeadMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  approved?: Prisma.SortOrder
 }
 
 export type StringFieldUpdateOperationsInput = {
@@ -269,33 +291,41 @@ export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
 }
 
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
+}
+
 
 
 export type EmailLeadSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   email?: boolean
   createdAt?: boolean
+  approved?: boolean
 }, ExtArgs["result"]["emailLead"]>
 
 export type EmailLeadSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   email?: boolean
   createdAt?: boolean
+  approved?: boolean
 }, ExtArgs["result"]["emailLead"]>
 
 export type EmailLeadSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   email?: boolean
   createdAt?: boolean
+  approved?: boolean
 }, ExtArgs["result"]["emailLead"]>
 
 export type EmailLeadSelectScalar = {
   id?: boolean
   email?: boolean
   createdAt?: boolean
+  approved?: boolean
 }
 
-export type EmailLeadOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "createdAt", ExtArgs["result"]["emailLead"]>
+export type EmailLeadOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "createdAt" | "approved", ExtArgs["result"]["emailLead"]>
 
 export type $EmailLeadPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "EmailLead"
@@ -304,6 +334,7 @@ export type $EmailLeadPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     id: string
     email: string
     createdAt: Date
+    approved: boolean
   }, ExtArgs["result"]["emailLead"]>
   composites: {}
 }
@@ -730,6 +761,7 @@ export interface EmailLeadFieldRefs {
   readonly id: Prisma.FieldRef<"EmailLead", 'String'>
   readonly email: Prisma.FieldRef<"EmailLead", 'String'>
   readonly createdAt: Prisma.FieldRef<"EmailLead", 'DateTime'>
+  readonly approved: Prisma.FieldRef<"EmailLead", 'Boolean'>
 }
     
 

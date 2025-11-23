@@ -520,7 +520,8 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 export const EmailLeadScalarFieldEnum = {
   id: 'id',
   email: 'email',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  approved: 'approved'
 } as const
 
 export type EmailLeadScalarFieldEnum = (typeof EmailLeadScalarFieldEnum)[keyof typeof EmailLeadScalarFieldEnum]
@@ -573,6 +574,13 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'DateTime[]'
  */
 export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 

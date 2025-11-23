@@ -6,6 +6,7 @@ type Lead = {
   id: string
   email: string
   createdAt: string
+  approved: boolean
 }
 
 type LeadsResponse = {
@@ -47,21 +48,42 @@ export default function EmailsAdminPage() {
     }
   }
 
+  async function approveLead(id: string) {
+    try {
+      const res = await fetch(`/api/leads/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ approved: true }),
+      })
+
+      const data = await res.json()
+
+      if (!res.ok) {
+        throw new Error(data.error || "Erro ao aprovar e-mail.")
+      }
+
+      setLeads((prev) =>
+        prev.map((lead) =>
+          lead.id === id ? { ...lead, approved: true } : lead
+        )
+      )
+    } catch (err: unknown) {
+      console.error("Erro aprovando lead:", err)
+      // você pode exibir um toast, etc
+    }
+  }
+
   useEffect(() => {
-    // carrega imediatamente
     loadLeads()
-
-    // atualiza de 5 em 5 segundos
-    const interval = setInterval(() => {
-      loadLeads()
-    }, 5000)
-
+    const interval = setInterval(loadLeads, 5000)
     return () => clearInterval(interval)
   }, [])
 
   return (
     <main className="min-h-screen bg-slate-100 px-4 py-8">
-      <div className="max-w-2xl mx-auto bg-white rounded-2xl shadow-lg p-6 space-y-4">
+      <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-lg p-6 space-y-4">
         <h1 className="text-xl font-semibold text-slate-900">
           E-mails cadastrados (teste fechado)
         </h1>
@@ -96,6 +118,12 @@ export default function EmailsAdminPage() {
                   <th className="text-left px-3 py-2 border-b border-slate-200">
                     Data/Hora
                   </th>
+                  <th className="text-left px-3 py-2 border-b border-slate-200">
+                    Status
+                  </th>
+                  <th className="text-left px-3 py-2 border-b border-slate-200">
+                    Ação
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -106,6 +134,32 @@ export default function EmailsAdminPage() {
                     </td>
                     <td className="px-3 py-2 border-b border-slate-100 text-xs text-slate-500">
                       {new Date(lead.createdAt).toLocaleString("pt-BR")}
+                    </td>
+                    <td className="px-3 py-2 border-b border-slate-100 text-xs">
+                      {lead.approved ? (
+                        <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-1 text-[11px] font-medium text-emerald-700">
+                          ✅ Aprovado
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2 py-1 text-[11px] font-medium text-amber-700">
+                          ⏳ Pendente
+                        </span>
+                      )}
+                    </td>
+                    <td className="px-3 py-2 border-b border-slate-100 text-xs">
+                      {!lead.approved && (
+                        <button
+                          onClick={() => approveLead(lead.id)}
+                          className="rounded-full bg-emerald-600 px-3 py-1 text-[11px] font-semibold text-white hover:bg-emerald-700"
+                        >
+                          Aprovar
+                        </button>
+                      )}
+                      {lead.approved && (
+                        <span className="text-slate-400 text-[11px]">
+                          ✔ Já aprovado
+                        </span>
+                      )}
                     </td>
                   </tr>
                 ))}
