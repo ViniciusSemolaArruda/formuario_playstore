@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Onde Tem Evento Rio – Teste Fechado",
+  title: "Onde Tem Evento Rio? - Acesse o App",
   description: "Formulário para liberar acesso ao aplicativo.",
   icons: {
     icon: "/favicon.ico", // 👈 AQUI o favicon entra
